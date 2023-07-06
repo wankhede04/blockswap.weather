@@ -1,0 +1,30 @@
+{
+  "name": "blockswap.weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "hardhat test",
+    "compile": "hardhat compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://wankhede04@github.com/wankhede04/blockswap.weather.git"
+  },
+  "keywords": [
+    "blockswap",
+    "registration",
+    "go-lang",
+    "solidity"
+  ],
+  "author": "wankhede04",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wankhede04/blockswap.weather/issues"
+  },
+  "homepage": "https://github.com/wankhede04/blockswap.weather#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.16.1"
+  }
+}
