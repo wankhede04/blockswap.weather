@@ -19,4 +19,12 @@ contract Registration is IRegistration {
         participants[msg.sender] = LifecycleStatus.Registered;
         emit ParticipantRegistered(msg.sender);
     }
+
+    /// @inheritdoc IRegistration
+    function resign() external virtual {
+        require(participants[msg.sender] == LifecycleStatus.Registered, "Not registered");
+
+        participants[msg.sender] = LifecycleStatus.Resigned;
+        emit ParticipantResigned(msg.sender);
+    }
 }
