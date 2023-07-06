@@ -26,6 +26,11 @@ const config: HardhatUserConfig = {
       timeout: 36000000,
     }
   },
+  etherscan: {
+    apiKey: {
+      arbitrumGoerli: process.env.ARBISCAN_API_KEY || "",
+    },
+  }
 };
 
 export default config;
