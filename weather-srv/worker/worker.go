@@ -1,9 +1,7 @@
 package worker
 
 import (
-	"bytes"
 	"context"
-	"crypto/ecdsa"
 	"fmt"
 	"math/big"
 
@@ -21,9 +19,6 @@ type WorkerConfig struct {
 	ChainName            string         `json:"chain_name"`
 	Provider             string         `json:"provider"`
 	RegistrationContract common.Address `json:"registration_contract"`
-	GasLimit             int64          `json:"gas_limit"`
-	WorkerAddr           common.Address `json:"worker_addr"`
-	PrivateKey           string         `json:"private_key"`
 	StartBlockHeight     *big.Int       `json:"from_block"`
 }
 
@@ -37,7 +32,6 @@ type Worker struct {
 	client               *ethclient.Client
 	registrationContract common.Address
 	DB                   *db.PostgresDataBase
-	PrivateKey           string
 	Threshold            int64
 }
 
@@ -60,27 +54,6 @@ func NewWorker(Logger *logrus.Logger, cfg WorkerConfig, db *db.PostgresDataBase)
 		panic(fmt.Sprintf("rpc error for %s : %s", cfg.ChainName, err.Error()))
 	}
 
-	privKey, err := crypto.HexToECDSA(cfg.PrivateKey)
-
-	if err != nil {
-		panic(fmt.Sprintf("generate private key error, err=%s", err.Error()))
-	}
-
-	publicKey := privKey.Public()
-	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
-	if !ok {
-		panic(fmt.Sprintf("get public key error, err=%s", err.Error()))
-	}
-
-	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
-
-	if !bytes.Equal(cfg.WorkerAddr.Bytes(), fromAddress.Bytes()) {
-		panic(fmt.Sprintf(
-			"Worker address supplied in config (%s) does not match mnemonic (%s)",
-			cfg.WorkerAddr, fromAddress,
-		))
-	}
-
 	chainid, err := client.ChainID(context.Background())
 	if err != nil {
 		panic("rpc not returning chain id")
@@ -95,7 +68,6 @@ func NewWorker(Logger *logrus.Logger, cfg WorkerConfig, db *db.PostgresDataBase)
 		client:               client,
 		registrationContract: cfg.RegistrationContract,
 		DB:                   db,
-		PrivateKey:           cfg.PrivateKey,
 	}
 }
 
@@ -105,11 +77,6 @@ func (w *Worker) GetChainID() int64 {
 
 func (w *Worker) GetRegistrationContract() common.Address {
 	return w.registrationContract
-}
-
-// GetWorkerAddress loads worker address from config
-func (w *Worker) GetWorkerAddress() string {
-	return w.config.WorkerAddr.String()
 }
 
 // GetLatestBlock returns latest block

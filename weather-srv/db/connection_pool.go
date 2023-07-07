@@ -12,7 +12,7 @@ import (
 type ConnectionPool struct {
 	maxSize      int
 	pool         chan *gorm.DB
-	connectionMu sync.Mutex
+	connectionMu sync.RWMutex
 }
 
 // NewConnectionPool creates a new connection pool with the specified maximum size
@@ -54,7 +54,7 @@ func NewConnectionPool(db *gorm.DB, maxSize int) (*ConnectionPool, error) {
 	return &ConnectionPool{
 		maxSize:      maxSize,
 		pool:         pool,
-		connectionMu: sync.Mutex{},
+		connectionMu: sync.RWMutex{},
 	}, nil
 }
 

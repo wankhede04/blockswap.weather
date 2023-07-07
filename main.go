@@ -17,9 +17,6 @@ func toWorkerConfig(config config.WorkerConfig) worker.WorkerConfig {
 		ChainName:            config.ChainName,
 		Provider:             config.Provider,
 		RegistrationContract: config.RegistrationContract,
-		GasLimit:             config.GasLimit,
-		WorkerAddr:           config.WorkerAddr,
-		PrivateKey:           config.PrivateKey,
 		StartBlockHeight:     config.StartBlockHeight,
 	}
 }

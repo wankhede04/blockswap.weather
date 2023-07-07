@@ -23,7 +23,7 @@ type WatcherSRV struct {
 	ctx      context.Context
 	cancelFn context.CancelFunc
 	dbPool   *db.ConnectionPool // Custom connection pool
-	dbMutex  sync.Mutex         // Mutex for database connection synchronization
+	dbMutex  sync.RWMutex       // Mutex for database connection synchronization
 }
 
 // NewWatcherSRV creates a new WatcherSRV instance
@@ -53,7 +53,7 @@ func NewWatcherSRV(database *db.PostgresDataBase, logger *logrus.Logger, wrkr *w
 		ctx:      ctx,
 		cancelFn: cancelFn,
 		dbPool:   dbPool,
-		dbMutex:  sync.Mutex{},
+		dbMutex:  sync.RWMutex{},
 	}, nil
 }
 

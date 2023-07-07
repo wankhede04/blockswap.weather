@@ -17,7 +17,7 @@ type WeatherService struct {
 	Database  *db.PostgresDataBase
 	logger    *logrus.Logger
 	dbPool    *db.ConnectionPool // Custom connection pool
-	dbMutex   sync.Mutex         // Mutex for database connection synchronization
+	dbMutex   sync.RWMutex       // Mutex for database connection synchronization
 	semaphore *sync.WaitGroup
 }
 
@@ -49,7 +49,7 @@ func NewWeatherService(dbURL string, logger *logrus.Logger, cfg *worker.WorkerCo
 		Database:  database,
 		logger:    logger,
 		dbPool:    dbPool,
-		dbMutex:   sync.Mutex{},
+		dbMutex:   sync.RWMutex{},
 		semaphore: semaphore,
 	}, nil
 }
