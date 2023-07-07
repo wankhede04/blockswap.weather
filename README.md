@@ -14,8 +14,7 @@ npx hardhat run scripts/registration.ts --network <NETWORK>
 
 # Weather Service
 
-## Description
-This is a weather service that allows users to report weather conditions. It uses a PostgreSQL database to store membership information and weather reports.
+The Weather Service App is a Go application that allows users to report weather information. It includes features such as user authentication, rate limiting, and storing weather reports in a database. The app is built using the Gin web framework and integrates with a weather API.
 
 ## Installation
 To install and run the Weather Service, follow these steps:
@@ -23,7 +22,7 @@ To install and run the Weather Service, follow these steps:
 1. Make sure you have PostgreSQL installed and running on your system.
 2. Clone the repository: git clone https://github.com/wankhede04/blockswap.weather.git
 3. Navigate to the project directory: cd blockswap.weather
-4. Update config file for postgres database,provider,chainId and registration contract address
+4. Set up the environment variables. Create a .env file in the root directory and define the necessary variables.
 5. Install the necessary dependencies: go mod tidy
 6. Build the application: go build
 7. Start the weather service: go run main.go
@@ -56,3 +55,8 @@ The weather service is built using the Gin framework and follows a client-server
    - Finally server will submit weather report in database with member ship ID and update lastCall in DB
 8. The watcher goroutine periodically fetches events from the contracts and updates their status based on simulated events.
 The server responds to the client with success or error messages for each request.
+
+## Future Prospect
+1. Rate limiting in distributed environments: Address the challenges of rate limiting in a distributed environment where multiple pods are deployed. This can be achieved by implementing a cache system (e.g., Redis) or handling rate limiting at the load balancer level.
+2. Security enhancements: Implement additional security measures such as input validation, request throttling, and protection against common web vulnerabilities (e.g., CSRF, XSS).
+3. Error handling and logging: Enhance error handling by providing meaningful error messages and implementing a robust logging mechanism to track application events and troubleshoot issues effectively.
