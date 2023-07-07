@@ -22,7 +22,7 @@ type WeatherService struct {
 }
 
 func NewWeatherService(dbURL string, logger *logrus.Logger, cfg *worker.WorkerConfig, maxConcurrentConnections int) (*WeatherService, error) {
-	database, err := db.InitialMigration(dbURL, *logger)
+	database, err := db.InitialMigration(dbURL, logger)
 	if err != nil {
 		return nil, err
 	}

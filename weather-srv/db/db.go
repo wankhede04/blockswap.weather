@@ -26,7 +26,7 @@ type PostgresDataBase struct {
 	Logger *logrus.Logger
 }
 
-func InitialMigration(dbURL string, logger logrus.Logger) (*PostgresDataBase, error) {
+func InitialMigration(dbURL string, logger *logrus.Logger) (*PostgresDataBase, error) {
 	gormConfig := &gorm.Config{Logger: gorm_logger.Default.LogMode(gorm_logger.Silent), DisableForeignKeyConstraintWhenMigrating: true}
 
 	db, err := gorm.Open(postgres.Open(dbURL), gormConfig)
@@ -43,5 +43,5 @@ func InitialMigration(dbURL string, logger logrus.Logger) (*PostgresDataBase, er
 
 	sqlDB.SetMaxOpenConns(10) // Set the maximum number of open connections
 
-	return &PostgresDataBase{DB: db, Logger: &logger}, err
+	return &PostgresDataBase{DB: db, Logger: logger}, err
 }

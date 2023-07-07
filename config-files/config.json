@@ -8,9 +8,8 @@
     "workers": {
       "ARB": {
         "chain_id": 421613,
-        "provider": "wss://arb-goerli.g.alchemy.com/v2/ZxuFZJ2-g6_2A-zWXYTU5UegMBIZHqDb",
+        "provider": "wss://arb-goerli.g.alchemy.com/v2/",
         "registration_contract": "0x36F3e6b9eFB8E4874a4B43965eD73E077BCa57c6",
-        "gas_limit": 210000000,
         "gas_price": 1,
         "fetch_interval": 2,
         "start_block_height": 0

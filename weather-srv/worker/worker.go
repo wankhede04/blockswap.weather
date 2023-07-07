@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"math/big"
+	"os"
 
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	"github.com/wankhede04/blockswap.weather/weather-srv/db"
 )
@@ -49,7 +51,13 @@ type RegistrationParticipantResigned struct {
 
 // NewWorker: initialises worker (used for tx on any chain)
 func NewWorker(Logger *logrus.Logger, cfg WorkerConfig, db *db.PostgresDataBase) *Worker {
-	client, err := ethclient.Dial(cfg.Provider)
+	err := godotenv.Load()
+	if err != nil {
+		Logger.Fatal("Error loading .env file")
+	}
+
+	provider := cfg.Provider + os.Getenv("ARBITRUM_TESTNET_ALCHEMY_API_KEY")
+	client, err := ethclient.Dial(provider)
 	if err != nil {
 		panic(fmt.Sprintf("rpc error for %s : %s", cfg.ChainName, err.Error()))
 	}
